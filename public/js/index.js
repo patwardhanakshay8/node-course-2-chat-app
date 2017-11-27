@@ -16,3 +16,10 @@ socket.on('newMessage', function(message) {
     console.log('New message',message);
 });
 
+socket.on('greetingAdmin', function(message) {
+    console.log('Greeting', message);
+});
+
+socket.on('newUserJoined', function(message) {
+    console.log('Notification', message);
+});
