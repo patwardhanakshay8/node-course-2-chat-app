@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
     socket.on('createLocationMessage', (location, callback) => {
         io.emit('newLocationMessage', generateLocationMessage('Akshay', location.latitude, location.longitude));
-        callback('This is so cool!');
+        callback();
     });
 
     socket.on('disconnect', () => {

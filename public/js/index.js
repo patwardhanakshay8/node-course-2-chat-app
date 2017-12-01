@@ -39,11 +39,14 @@ socket.on('newUserJoined', function(message) {
 
 jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
+
+    var messageTextbox = jQuery('[name=message]')
+
     socket.emit('createMessage', {
         from : 'Akshay',
-        text : jQuery('[name=message]').val()
+        text : messageTextbox.val()
     }, function (data) {
-        console.log(data);
+        messageTextbox.val('')
     });
 });
 
@@ -53,14 +56,19 @@ locationButton.on('click', function() {
     if (!navigator.geolocation) {
         return alert('Geolocation not supported.');
     }
+
+    locationButton.attr('disabled','disabled').text('Sending Location....');
+
     navigator.geolocation.getCurrentPosition(function(position) {
+        locationButton.removeAttr('disabled').text('Send Location');
         socket.emit('createLocationMessage', {
             latitude : position.coords.latitude,
             longitude : position.coords.longitude
-        }, function(data) {
-            console.log(data)
+        }, function() {
+            
         })
     }, function() {
+        locationButton.removeAttr('disabled').text('Send Location');
         alert('Unable to fetch location.');
     });
 });
